@@ -26,7 +26,21 @@ export const getProducts = async (req, res) => {
 
 export const getCustomers = async (req, res) => {
   try {
-    const customers = await User.find({ role: "users" }).select("-password");
+    const customers = await User.find({ role: "user" }).select("-password");
+    res.status(200).json(customers);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const getTransaction = async (req, res) => {
+  try {
+    // sort should look like this: {} "field": "userId", "sort": "desc"}
+    const { page = 1, pageSize = 20, sort = null, search = "" } = req.query;
+
+    // formatted sort should ook like { userId: -1 }
+    const generateSort = () => {};
+
     res.status(200).json(customers);
   } catch (error) {
     res.status(404).json({ message: error.message });
